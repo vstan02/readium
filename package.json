@@ -1,0 +1,23 @@
+{
+  "name": "readium",
+  "description": "An online book sharing social networking service",
+  "author": "Stan Vlad <vstan02@protonmail.com>",
+  "license": "GPLV3",
+  "scripts": {
+    "install:core": "npm i --prefix core",
+    "install:web": "npm i --prefix web",
+    "install": "npm run install:core && npm run install:web",
+    "lint:core": "npm run lint --prefix core",
+    "lint:web": "npm run lint --prefix web",
+    "lint": "npm run lint:core && npm run lint:web",
+    "test:core": "npm run test --prefix core",
+    "test:web": "npm run test --prefix web",
+    "test": "npm run test:core && npm run test:web",
+    "dev:core": "npm run dev --prefix core",
+    "dev:web": "npm run dev --prefix web",
+    "dev": "npm run dev:core & npm run dev:web",
+    "build:core": "npm run build --prefix core",
+    "build:web": "npm run build --prefix web",
+    "build": "npm run build:core && npm run build:web"
+  }
+}

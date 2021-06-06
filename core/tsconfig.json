@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"outDir": "build",
+		"baseUrl": "src",
+		"target": "es6",
+		"module": "commonjs",
+		"charset": "utf8",
+		"allowJs": true,
+		"checkJs": true,
+		"downlevelIteration": true,
+		"disableSizeLimit": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"pretty": true,
+		"strict": true
+	},
+	"include": ["src/**/*.ts"]
+}
