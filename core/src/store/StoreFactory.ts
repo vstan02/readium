@@ -15,11 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
+import { Store } from './core';
+import { FakeStore } from './fake-store';
+import { StoreType } from './StoreType';
 
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
-
-	console.log(store);
-})();
+export class StoreFactory {
+	public create(type: StoreType): Store {
+		switch (type) {
+			case StoreType.FAKE_STORE:
+				return new FakeStore();
+		}
+	}
+}

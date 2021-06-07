@@ -15,11 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
+export type EntityID = string;
+export type EntityData = Record<string, any>;
 
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
-
-	console.log(store);
-})();
+export interface Entity extends EntityData {
+	id: EntityID;
+	[p: string]: any;
+}

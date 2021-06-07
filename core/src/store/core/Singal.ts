@@ -15,11 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
+export enum SignalType {
+	NOT_FOUND
+}
 
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
+export interface Signal extends Error {
+	type: SignalType;
+}
 
-	console.log(store);
-})();
+export function createSignal(type: SignalType, details: string): Signal {
+	const error = new Error(details) as Signal;
+	error.type = type;
+	return error;
+}

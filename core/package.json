@@ -4,7 +4,6 @@
   "author": "Stan Vlad <vstan02@protonmail.com>",
   "main": "build/index.js",
   "scripts": {
-    "postinstall": "ts-node setup.ts",
     "lint": "eslint 'src/**' --fix --ext .js,.ts",
     "build": "tsc -p .",
     "test": "jest --silent --forceExit --detectOpenHandles || true",
@@ -12,14 +11,7 @@
     "start": "node dist/index.js"
   },
   "devDependencies": {
-    "@types/bcrypt": "^3.0.0",
-    "@types/config": "0.0.38",
-    "@types/cors": "^2.8.9",
-    "@types/express": "^4.17.9",
     "@types/jest": "^26.0.14",
-    "@types/jsonwebtoken": "^8.5.0",
-    "@types/mongoose": "^5.10.3",
-    "@types/multer": "^1.4.5",
     "@types/node": "^14.11.2",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
@@ -28,16 +20,5 @@
     "ts-jest": "^25.4.0",
     "ts-node": "^8.6.1",
     "typescript": "^3.7.4"
-  },
-  "dependencies": {
-    "bcrypt": "^5.0.0",
-    "cloudinary": "^1.25.0",
-    "config": "^3.3.3",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-validator": "^6.9.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.8",
-    "multer": "^1.4.2"
   }
 }

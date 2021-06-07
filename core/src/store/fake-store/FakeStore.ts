@@ -15,11 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
+import { Store, Collection, CollectionType } from '../core';
 
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
+export class FakeStore extends Store {
+	private collections: Map<CollectionType, Collection>;
 
-	console.log(store);
-})();
+	public constructor() {
+		super();
+		this.collections = new Map<CollectionType, Collection>();
+	}
+
+	public collection(type: CollectionType): Collection {
+		return this.collections.get(type)!;
+	}
+}

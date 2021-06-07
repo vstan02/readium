@@ -15,11 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
-
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
-
-	console.log(store);
-})();
+export * from './Entity';
+export * from './Collection';
+export * from './Store';
+export * from './Singal';

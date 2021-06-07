@@ -15,11 +15,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
+import { EntityID, EntityData } from './Entity';
 
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
+export interface SearchOptions {
+	select?: Array<string>;
+}
 
-	console.log(store);
-})();
+export interface Collection {
+	get(id: EntityID, options?: SearchOptions): Promise<EntityData>;
+	getBy(data: EntityData, options?: SearchOptions): Promise<EntityData>;
+	getAll(options?: SearchOptions): Promise<Array<EntityData>>;
+	create(entity: EntityData): Promise<EntityID>;
+	update(id: EntityID, data: EntityData): Promise<void>;
+	delete(id: EntityID): Promise<void>;
+}
+
+export const isCollection = (obj: object): obj is Collection =>
+	'get' in obj
+	&& 'getBy' in obj
+	&& 'getAll' in obj
+	&& 'create' in obj
+	&& 'update' in obj
+	&& 'delete' in obj
+;

@@ -15,11 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { StoreFactory, StoreType } from './store';
+import { Collection } from './Collection';
 
-(async function (): Promise<void> {
-	const factory = new StoreFactory();
-	const store = factory.create(StoreType.FAKE_STORE);
+export enum CollectionType {}
 
-	console.log(store);
-})();
+export abstract class Store {
+	public async open(): Promise<void> { return }
+	public async close(): Promise<void> { return }
+
+	public abstract collection(type: CollectionType): Collection;
+}
