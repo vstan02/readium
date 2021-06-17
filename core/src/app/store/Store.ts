@@ -17,7 +17,9 @@
 
 import { Collection } from './Collection';
 
-export enum CollectionType {}
+export enum CollectionType {
+	USERS
+}
 
 export interface Store {
 	collection(type: CollectionType): Collection;

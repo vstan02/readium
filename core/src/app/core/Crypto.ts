@@ -15,4 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export * from './App';
+import { hashSync, compareSync } from 'bcrypt';
+
+export class Crypto {
+	public hash(text: string): string {
+		return hashSync(text, 12);
+	}
+
+	public compare(text: string, encrypted: string): boolean {
+		return compareSync(text, encrypted);
+	}
+}

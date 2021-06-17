@@ -15,4 +15,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export * from './App';
+export enum SignalType {
+	NOT_FOUND = 'NOT_FOUND',
+	INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
+	ALREADY_EXISTS = 'ALREADY_EXISTS'
+}
+
+export interface Signal extends Error {
+	type: SignalType;
+}
+
+export function createSignal(type: SignalType, details: string): Signal {
+	const error = new Error(details) as Signal;
+	error.type = type;
+	return error;
+}

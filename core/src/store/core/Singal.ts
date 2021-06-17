@@ -16,7 +16,7 @@
  */
 
 export enum SignalType {
-	NOT_FOUND
+	NOT_FOUND = 'NOT_FOUND'
 }
 
 export interface Signal extends Error {

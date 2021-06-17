@@ -15,4 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export * from './App';
+import { Store } from './store';
+import { AuthService } from './core';
+
+export class App {
+	private readonly store: Store;
+
+	public constructor(store: Store) {
+		this.store = store;
+	}
+
+	public authService(): AuthService {
+		return new AuthService(this.store);
+	}
+}

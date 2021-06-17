@@ -15,12 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Store } from '../store';
+import { Collection, CollectionType, Store } from '../store';
 
 export class Service {
 	private store: Store;
 
 	public constructor(store: Store) {
 		this.store = store;
+	}
+
+	protected get users(): Collection {
+		return this.store.collection(CollectionType.USERS);
 	}
 }

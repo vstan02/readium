@@ -15,14 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Store, Collection, CollectionType } from '../core';
+import { Collection, CollectionType, Store } from '../core';
+
+import { FakeCollection } from './FakeCollection';
 
 export class FakeStore extends Store {
 	private collections: Map<CollectionType, Collection>;
 
 	public constructor() {
 		super();
-		this.collections = new Map<CollectionType, Collection>();
+		this.collections = new Map<CollectionType, Collection>()
+			.set(CollectionType.USERS, new FakeCollection());
 	}
 
 	public collection(type: CollectionType): Collection {
