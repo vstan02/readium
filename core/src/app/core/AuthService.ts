@@ -21,7 +21,7 @@ import { Service } from './Service';
 import { Crypto } from './Crypto';
 import { createSignal, SignalType } from './Signal';
 
-interface UserData extends EntityData {
+interface UserData {
 	username: string;
 	password: string;
 }
