@@ -1,4 +1,6 @@
 /* Copyright (C) 2021 Stan Vlad
+ * Copyright (C) 2021 Bucataru Florin
+ *
  * This file is part of Readium.
  *
  * Readium is free software: you can redistribute it and/or modify
@@ -18,7 +20,8 @@
 import { Collection } from './Collection';
 
 export enum CollectionType {
-	USERS
+	USERS,
+	BOOKS
 }
 
 export abstract class Store {
