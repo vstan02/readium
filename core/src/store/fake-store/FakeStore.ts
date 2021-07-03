@@ -1,4 +1,6 @@
 /* Copyright (C) 2021 Stan Vlad
+ * Copyright (C) 2021 Bucataru Florin
+ *
  * This file is part of Readium.
  *
  * Readium is free software: you can redistribute it and/or modify
@@ -25,7 +27,8 @@ export class FakeStore extends Store {
 	public constructor() {
 		super();
 		this.collections = new Map<CollectionType, Collection>()
-			.set(CollectionType.USERS, new FakeCollection());
+			.set(CollectionType.USERS, new FakeCollection())
+			.set(CollectionType.BOOKS, new FakeCollection());
 	}
 
 	public collection(type: CollectionType): Collection {
