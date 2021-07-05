@@ -18,5 +18,5 @@
 import { AuthService } from './AuthService';
 
 export interface App {
-	authService(): AuthService;
+	auth: AuthService;
 }

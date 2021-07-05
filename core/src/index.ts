@@ -15,11 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { App } from './app';
 import { StoreFactory, StoreType } from './store';
+import { Api } from './api';
 
 (async function (): Promise<void> {
 	const factory = new StoreFactory();
 	const store = factory.create(StoreType.FAKE_STORE);
 
-	console.log(store);
+	const app = new App(store);
+	const api = new Api(app);
+	await api.run();
 })();

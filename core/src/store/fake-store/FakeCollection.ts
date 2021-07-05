@@ -62,14 +62,15 @@ export class FakeCollection implements Collection {
 	public async create(entity: EntityData): Promise<EntityID> {
 		const id = this.createID();
 		this.entities.set(id, { id, ...entity });
+		console.log(await this.getAll());
 		return id;
 	}
 
-	public async update(id: EntityID, newData: EntityData): Promise<void> {
+	public async update(id: EntityID, changes: EntityData): Promise<void> {
 		const data = this.entities.get(id);
 		if (data) {
-			Object.assign(data, ...this.getUpdatedProps(newData), { id: data.id });
-			this.entities.set(data.id!, data);
+			Object.assign(data, ...this.getUpdatedProps(changes), { id: data.id });
+			this.entities.set(data.id, data);
 		} else {
 			throw createSignal(SignalType.NOT_FOUND, 'Entity not found.');
 		}

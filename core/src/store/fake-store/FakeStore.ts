@@ -26,9 +26,10 @@ export class FakeStore extends Store {
 
 	public constructor() {
 		super();
-		this.collections = new Map<CollectionType, Collection>()
-			.set(CollectionType.USERS, new FakeCollection())
-			.set(CollectionType.BOOKS, new FakeCollection());
+		this.collections = new Map<CollectionType, Collection>([
+			[CollectionType.USERS, new FakeCollection()],
+			[CollectionType.BOOKS, new FakeCollection()]
+		]);
 	}
 
 	public collection(type: CollectionType): Collection {

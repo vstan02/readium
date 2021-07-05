@@ -25,9 +25,9 @@ export class AuthRoute extends Route {
 
 	public constructor(app: App) {
 		super('/auth');
-		this.auth = app.authService();
+		this.auth = app.auth;
 
-		this.router.post('/register', this.register.bind(this));
+		this.post('/register', this.register);
 	}
 
 	private async register(request: Request, response: Response): Promise<void> {

@@ -25,8 +25,8 @@ export enum CollectionType {
 }
 
 export abstract class Store {
+	public abstract collection(type: CollectionType): Collection;
+
 	public async open(): Promise<void> { return }
 	public async close(): Promise<void> { return }
-
-	public abstract collection(type: CollectionType): Collection;
 }

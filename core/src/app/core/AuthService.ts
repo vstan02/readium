@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { EntityData, Store } from '../store';
+import { Store } from '../store';
 
 import { Service } from './Service';
 import { Crypto } from './Crypto';

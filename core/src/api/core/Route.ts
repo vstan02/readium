@@ -15,11 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Application, Router } from 'express';
+import { Application, RequestHandler, Router } from 'express';
 
 export class Route {
 	private readonly path: string;
-	protected readonly router: Router;
+	private readonly router: Router;
 
 	public constructor(path: string) {
 		this.path = path;
@@ -28,5 +28,25 @@ export class Route {
 
 	public connect(app: Application): void {
 		app.use(this.path, this.router);
+	}
+
+	protected get(path: string, handler: RequestHandler): void {
+		this.route('get', path, handler);
+	}
+
+	protected post(path: string, handler: RequestHandler): void {
+		this.route('post', path, handler);
+	}
+
+	protected put(path: string, handler: RequestHandler): void {
+		this.route('put', path, handler);
+	}
+
+	protected delete(path: string, handler: RequestHandler): void {
+		this.route('delete', path, handler);
+	}
+
+	private route(method: string, path: string, handler: RequestHandler): void {
+		this.router[method](path, handler.bind(this));
 	}
 }

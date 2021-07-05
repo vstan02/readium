@@ -17,8 +17,3 @@
 
 export type EntityID = string;
 export type EntityData = Record<string, any>;
-
-export interface Entity extends EntityData {
-	id: EntityID;
-	[p: string]: any;
-}
