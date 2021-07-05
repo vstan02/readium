@@ -15,8 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { AuthService } from './AuthService';
+import { checkSchema } from 'express-validator';
 
-export interface App {
-	authService(): AuthService;
-}
+export const register = checkSchema({
+	username: {
+		exists: true,
+		notEmpty: true,
+		errorMessage: 'Username is required.'
+	},
+	password: {
+		exists: true,
+		notEmpty: true,
+		errorMessage: 'Password is required.'
+	}
+});

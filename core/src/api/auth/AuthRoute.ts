@@ -18,21 +18,26 @@
 import { Request, Response } from 'express';
 
 import { App, AuthService } from '../app';
-import { Route, ResponseSender } from '../core';
+import { Route, ResponseSender, RequestValidator } from '../core';
+
+import { register } from './authMiddleware';
 
 export class AuthRoute extends Route {
 	private auth: AuthService;
+	private validator: RequestValidator;
 
 	public constructor(app: App) {
 		super('/auth');
-		this.auth = app.auth;
+		this.validator = new RequestValidator();
+		this.auth = app.authService();
 
-		this.post('/register', this.register);
+		this.post('/register', this.register, [register]);
 	}
 
 	private async register(request: Request, response: Response): Promise<void> {
 		const sender = new ResponseSender(response);
 		try {
+			this.validator.validate(request);
 			await this.auth.register(request.body);
 			return sender.created();
 		} catch (error) {

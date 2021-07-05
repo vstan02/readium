@@ -25,7 +25,7 @@ export class App {
 		this.store = store;
 	}
 
-	public get auth(): AuthService {
+	public authService(): AuthService {
 		return new AuthService(this.store);
 	}
 }

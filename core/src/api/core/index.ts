@@ -18,3 +18,4 @@
 export * from './Route';
 export * from './Signal';
 export * from './ResponseSender';
+export * from './RequestValidator';

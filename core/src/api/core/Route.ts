@@ -17,6 +17,13 @@
 
 import { Application, RequestHandler, Router } from 'express';
 
+interface RouteHandler {
+	path: string;
+	method: string;
+	target: RequestHandler;
+	middleware?: Array<any>;
+}
+
 export class Route {
 	private readonly path: string;
 	private readonly router: Router;
@@ -30,23 +37,28 @@ export class Route {
 		app.use(this.path, this.router);
 	}
 
-	protected get(path: string, handler: RequestHandler): void {
-		this.route('get', path, handler);
+	protected get(path: string, target: RequestHandler, middleware?: Array<any>): void {
+		this.route({ method: 'get', path, target, middleware });
 	}
 
-	protected post(path: string, handler: RequestHandler): void {
-		this.route('post', path, handler);
+	protected post(path: string, target: RequestHandler, middleware?: Array<any>): void {
+		this.route({ method: 'post', path, target, middleware });
 	}
 
-	protected put(path: string, handler: RequestHandler): void {
-		this.route('put', path, handler);
+	protected put(path: string, target: RequestHandler, middleware?: Array<any>): void {
+		this.route({ method: 'put', path, target, middleware });
 	}
 
-	protected delete(path: string, handler: RequestHandler): void {
-		this.route('delete', path, handler);
+	protected delete(path: string, target: RequestHandler, middleware?: Array<any>): void {
+		this.route({ method: 'delete', path, target, middleware });
 	}
 
-	private route(method: string, path: string, handler: RequestHandler): void {
-		this.router[method](path, handler.bind(this));
+	private route({ method, path, target, middleware }: RouteHandler): void {
+		const router = this.router as Record<string, any>;
+		if (!middleware) {
+			router[method](path, target.bind(this));
+		} else {
+			router[method](path, middleware, target.bind(this));
+		}
 	}
 }

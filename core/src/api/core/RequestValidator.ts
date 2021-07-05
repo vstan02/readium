@@ -15,8 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { AuthService } from './AuthService';
+import { Request } from 'express';
+import { validationResult } from 'express-validator';
 
-export interface App {
-	authService(): AuthService;
+import { createSignal, SignalType } from './Signal';
+
+export class RequestValidator {
+	public validate(request: Request): void {
+		const errors = validationResult(request);
+
+		if (!errors.isEmpty()) {
+			throw createSignal(SignalType.INVALID_REQUEST, errors.array()[0].msg);
+		}
+	}
 }
