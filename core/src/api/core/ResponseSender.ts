@@ -17,7 +17,7 @@
 
 import { Response } from 'express';
 
-import { SignalType } from './Signal';
+import { Signals } from './Signals';
 
 enum Status {
 	OK = 200,
@@ -60,13 +60,13 @@ export class ResponseSender {
 
 	private status(error: any): Status {
 		switch (error.type) {
-			case SignalType.NOT_FOUND:
+			case Signals.NOT_FOUND:
 				return Status.NOT_FOUND;
-			case SignalType.ALREADY_EXISTS:
+			case Signals.ALREADY_EXISTS:
 				return Status.CONFLICT;
-			case SignalType.INVALID_REQUEST:
-			case SignalType.INVALID_CREDENTIALS:
-			case SignalType.INVALID_TOKEN:
+			case Signals.INVALID_REQUEST:
+			case Signals.INVALID_CREDENTIALS:
+			case Signals.INVALID_TOKEN:
 				return Status.INVALID_REQUEST;
 			default:
 				return Status.INTERNAL_ERROR;

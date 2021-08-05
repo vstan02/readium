@@ -16,10 +16,10 @@
  */
 
 import { randomBytes } from 'crypto';
+import { SignalManager } from 'signex';
 
 import {
-	createSignal,
-	SignalType,
+	Signals,
 	Entity,
 	EntityData,
 	EntityID,
@@ -29,15 +29,17 @@ import {
 
 export class FakeCollection implements Collection {
 	private entities: Map<string, Entity>;
+	private signals: SignalManager<Signals>;
 
 	public constructor() {
 		this.entities = new Map<string, Entity>();
+		this.signals = new SignalManager<Signals>();
 	}
 
 	public async get(id: EntityID, options?: SearchOptions): Promise<EntityData> {
 		const entity = this.entities.get(id);
 		if (!entity) {
-			throw createSignal(SignalType.NOT_FOUND, 'Entity not found.');
+			throw this.signals.create(Signals.NOT_FOUND, 'Entity not found.');
 		}
 
 		return this.select(entity, options?.select);
@@ -48,7 +50,7 @@ export class FakeCollection implements Collection {
 			.filter((entity: Entity) => this.compare(entity, data))[0];
 
 		if (!result) {
-			throw createSignal(SignalType.NOT_FOUND, 'Entity not found.');
+			throw this.signals.create(Signals.NOT_FOUND, 'Entity not found.');
 		}
 
 		return this.select(result, options?.select);
@@ -71,7 +73,7 @@ export class FakeCollection implements Collection {
 			Object.assign(data, ...this.getUpdatedProps(changes), { id: data.id });
 			this.entities.set(data.id, data);
 		} else {
-			throw createSignal(SignalType.NOT_FOUND, 'Entity not found.');
+			this.signals.throw(Signals.NOT_FOUND, 'Entity not found.');
 		}
 	}
 

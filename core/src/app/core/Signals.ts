@@ -15,20 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-export enum SignalType {
+export enum Signals {
 	NOT_FOUND = 'NOT_FOUND',
 	INVALID_CREDENTIALS = 'INVALID_CREDENTIALS',
-	ALREADY_EXISTS = 'ALREADY_EXISTS',
-	INVALID_REQUEST = 'INVALID_REQUEST',
-	INVALID_TOKEN = 'INVALID_TOKEN'
-}
-
-export interface Signal extends Error {
-	type: SignalType;
-}
-
-export function createSignal(type: SignalType, details: string): Signal {
-	const error = new Error(details) as Signal;
-	error.type = type;
-	return error;
+	ALREADY_EXISTS = 'ALREADY_EXISTS'
 }

@@ -15,11 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { Store } from '../store';
+import { SignalManager } from 'signex';
+
+import { Store, EntityData } from '../store';
 
 import { Service } from './Service';
 import { Crypto } from './Crypto';
-import { createSignal, SignalType } from './Signal';
+import { Signals } from './Signals';
 
 interface UserData {
 	username: string;
@@ -28,15 +30,29 @@ interface UserData {
 
 export class AuthService extends Service {
 	private crypto: Crypto;
+	private signals: SignalManager<Signals>;
 
 	public constructor(store: Store) {
 		super(store);
 		this.crypto = new Crypto();
+		this.signals = new SignalManager<Signals>();
+	}
+
+	public async login(data: UserData): Promise<void> {
+		try {
+			const result = await this.users.getBy({ username: data.username });
+			this.validatePassword(result, data.password);
+			return result.profile;
+		} catch (error) {
+			if (error.type == Signals.NOT_FOUND)
+				this.signals.throw(Signals.INVALID_CREDENTIALS, 'Invalid username');
+			throw error;
+		}
 	}
 
 	public async register(data: UserData): Promise<void> {
 		if (await this.exists(data.username)) {
-			throw createSignal(SignalType.ALREADY_EXISTS, 'Username already exists.');
+			this.signals.throw(Signals.ALREADY_EXISTS, 'Username already exists');
 		}
 
 		await this.users.create({
@@ -45,11 +61,17 @@ export class AuthService extends Service {
 		});
 	}
 
+	private validatePassword(target: EntityData, password: string): void {
+		if (!this.crypto.compare(password, target.password)) {
+			this.signals.throw(Signals.INVALID_CREDENTIALS, 'Invalid password');
+		}
+	}
+
 	private async exists(username: string): Promise<boolean> {
 		try {
 			return !!await this.users.getBy({ username });
 		} catch (error) {
-			if (error.type == SignalType.NOT_FOUND)
+			if (error.type == Signals.NOT_FOUND)
 				return false;
 			throw error;
 		}

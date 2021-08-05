@@ -9,11 +9,5 @@
     "test": "npm run test --prefix core",
     "dev": "npm run dev --prefix core",
     "build": "npm run build --prefix core"
-  },
-  "dependencies": {
-    "express-validator": "^6.12.0"
-  },
-  "devDependencies": {
-    "@types/express-validator": "^3.0.0"
   }
 }

@@ -17,15 +17,22 @@
 
 import { Request } from 'express';
 import { validationResult } from 'express-validator';
+import { SignalManager } from 'signex';
 
-import { createSignal, SignalType } from './Signal';
+import { Signals } from './Signals';
 
 export class RequestValidator {
+	private signals: SignalManager<Signals>;
+
+	public constructor() {
+		this.signals = new SignalManager<Signals>();
+	}
+
 	public validate(request: Request): void {
 		const errors = validationResult(request);
 
 		if (!errors.isEmpty()) {
-			throw createSignal(SignalType.INVALID_REQUEST, errors.array()[0].msg);
+			this.signals.throw(Signals.INVALID_REQUEST, errors.array()[0].msg);
 		}
 	}
 }

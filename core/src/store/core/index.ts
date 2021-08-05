@@ -18,4 +18,4 @@
 export * from './Entity';
 export * from './Collection';
 export * from './Store';
-export * from './Singal';
+export * from './Singals';

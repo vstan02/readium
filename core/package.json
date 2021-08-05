@@ -1,5 +1,5 @@
 {
-  "name": "core-freeware",
+  "name": "core-readmium",
   "version": "0.0.0",
   "author": "Stan Vlad <vstan02@protonmail.com>",
   "main": "build/index.js",
@@ -29,6 +29,7 @@
     "bcrypt": "^5.0.1",
     "config": "^3.3.6",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "signex": "0.0.1"
   }
 }

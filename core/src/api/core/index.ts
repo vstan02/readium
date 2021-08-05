@@ -16,6 +16,6 @@
  */
 
 export * from './Route';
-export * from './Signal';
+export * from './Signals';
 export * from './ResponseSender';
 export * from './RequestValidator';
