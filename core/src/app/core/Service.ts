@@ -27,4 +27,8 @@ export class Service {
 	protected get users(): Collection {
 		return this.store.collection(CollectionType.USERS);
 	}
+
+	protected get profile(): Collection {
+		return this.store.collection(CollectionType.PROFILE);
+	}
 }

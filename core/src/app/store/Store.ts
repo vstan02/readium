@@ -21,7 +21,7 @@ import { Collection } from './Collection';
 
 export enum CollectionType {
 	USERS,
-	BOOKS
+	PROFILE
 }
 
 export interface Store {

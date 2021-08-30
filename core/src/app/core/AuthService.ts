@@ -17,15 +17,24 @@
 
 import { SignalManager } from 'signex';
 
-import { Store, EntityData } from '../store';
+import { Store, EntityData, Collection } from '../store';
 
 import { Service } from './Service';
 import { Crypto } from './Crypto';
 import { Signals } from './Signals';
 
 interface UserData {
-	username: string;
+	email: string;
 	password: string;
+}
+
+interface ProfileData {
+	username: string;
+}
+
+interface Profile {
+	id: string;
+	username: string;
 }
 
 export class AuthService extends Service {
@@ -38,26 +47,33 @@ export class AuthService extends Service {
 		this.signals = new SignalManager<Signals>();
 	}
 
-	public async login(data: UserData): Promise<void> {
+	public async login(data: UserData): Promise<Profile> {
 		try {
-			const result = await this.users.getBy({ username: data.username });
+			const result = await this.users.getBy({ email: data.email });
 			this.validatePassword(result, data.password);
 			return result.profile;
 		} catch (error) {
 			if (error.type == Signals.NOT_FOUND)
-				this.signals.throw(Signals.INVALID_CREDENTIALS, 'Invalid username');
+				this.signals.throw(Signals.INVALID_CREDENTIALS, 'Invalid email');
 			throw error;
 		}
 	}
 
-	public async register(data: UserData): Promise<void> {
-		if (await this.exists(data.username)) {
-			this.signals.throw(Signals.ALREADY_EXISTS, 'Username already exists');
+	public async register(data: UserData & ProfileData): Promise<void> {
+		if (await this.userExists(data.email)) {
+			this.signals.throw(Signals.ALREADY_EXISTS, 'Email address is already used');
+		}
+
+		if (await this.profileExists(data.username)) {
+			this.signals.throw(Signals.ALREADY_EXISTS, 'Username is already used');
 		}
 
 		await this.users.create({
-			username: data.username,
-			password: this.crypto.hash(data.password)
+			email: data.username,
+			password: this.crypto.hash(data.password),
+			profile: this.profile.create({
+				username: data.username
+			})
 		});
 	}
 
@@ -67,9 +83,17 @@ export class AuthService extends Service {
 		}
 	}
 
-	private async exists(username: string): Promise<boolean> {
+	private async userExists(email: string): Promise<boolean> {
+		return this.exists(this.users, { email });
+	}
+
+	private async profileExists(username: string): Promise<boolean> {
+		return this.exists(this.profile, { username });
+	}
+
+	private async exists(collection: Collection, filter: EntityData): Promise<boolean> {
 		try {
-			return !!await this.users.getBy({ username });
+			return !!await collection.getBy(filter);
 		} catch (error) {
 			if (error.type == Signals.NOT_FOUND)
 				return false;

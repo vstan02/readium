@@ -15,6 +15,7 @@
     "@types/config": "0.0.38",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
+    "@types/express-validator": "^3.0.0",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.2",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
@@ -30,6 +31,7 @@
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-validator": "^6.12.1",
     "signex": "0.0.1"
   }
 }

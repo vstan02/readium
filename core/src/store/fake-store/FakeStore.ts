@@ -28,11 +28,15 @@ export class FakeStore extends Store {
 		super();
 		this.collections = new Map<CollectionType, Collection>([
 			[CollectionType.USERS, new FakeCollection()],
-			[CollectionType.BOOKS, new FakeCollection()]
+			[CollectionType.PROFILE, new FakeCollection()]
 		]);
 	}
 
 	public collection(type: CollectionType): Collection {
-		return this.collections.get(type)!;
+		const result = this.collections.get(type);
+		if (!result) {
+			throw new Error('Invalid collection');
+		}
+		return result;
 	}
 }

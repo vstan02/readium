@@ -20,7 +20,7 @@ import { Request, Response } from 'express';
 import { App, AuthService } from '../app';
 import { Route, ResponseSender, RequestValidator } from '../core';
 
-import { register } from './authMiddleware';
+import { user, profile } from './authMiddleware';
 
 export class AuthRoute extends Route {
 	private auth: AuthService;
@@ -31,7 +31,20 @@ export class AuthRoute extends Route {
 		this.validator = new RequestValidator();
 		this.auth = app.authService();
 
-		this.post('/register', this.register, [register]);
+		this.post('/login', this.login, [user]);
+		this.post('/register', this.register, [user, profile]);
+	}
+
+	private async login(request: Request, response: Response): Promise<void> {
+		const sender = new ResponseSender(response);
+		try {
+			this.validator.validate(request);
+			return sender.success({
+				profile: await this.auth.login(request.body)
+			});
+		} catch (error) {
+			return sender.error(error);
+		}
 	}
 
 	private async register(request: Request, response: Response): Promise<void> {

@@ -17,15 +17,27 @@
 
 import { checkSchema } from 'express-validator';
 
-export const register = checkSchema({
-	username: {
+export const user = checkSchema({
+	email: {
 		exists: true,
 		notEmpty: true,
-		errorMessage: 'Username is required.'
+		errorMessage: 'Email is required',
+		isEmail: {
+			bail: true,
+			errorMessage: 'Email must be a valid email address'
+		}
 	},
 	password: {
 		exists: true,
 		notEmpty: true,
-		errorMessage: 'Password is required.'
+		errorMessage: 'Password is required'
+	}
+});
+
+export const profile = checkSchema({
+	username: {
+		exists: true,
+		notEmpty: true,
+		errorMessage: 'Username is required'
 	}
 });

@@ -16,10 +16,20 @@
  */
 
 export interface UserData {
-	username: string;
+	email: string;
 	password: string;
 }
 
+export interface ProfileData {
+	username: string;
+}
+
+export interface Profile {
+	id: string;
+	username: string;
+}
+
 export interface AuthService {
+	login(user: UserData & ProfileData): Promise<Profile>;
 	register(user: UserData): Promise<void>;
 }
